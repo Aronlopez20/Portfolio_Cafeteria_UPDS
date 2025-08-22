@@ -15,7 +15,7 @@
                 📅 {{ now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}
             </p>
             <p class="text-lg text-orange-600 mt-2">
-                🕐 Horario de atención: 7:00 AM - 6:00 PM
+                🕐 Horario de atención: 8:30 AM - 6:00 PM
             </p>
         </div>
 

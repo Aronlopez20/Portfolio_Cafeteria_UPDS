@@ -1,5 +1,4 @@
 <?php
-// database/seeders/DatabaseSeeder.php (modificar)
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -9,9 +8,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            CategorySeeder::class,
-            MenuItemSeeder::class,
-            UserSeeder::class,
+            RoleSeeder::class,        // Primero crear los roles
+            CategorySeeder::class,    // Luego las categorías
+            MenuItemSeeder::class,    // Después los items del menú
+            UserSeeder::class,        // Finalmente los usuarios con roles
         ]);
     }
 }
