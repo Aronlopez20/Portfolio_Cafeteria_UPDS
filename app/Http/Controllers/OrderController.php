@@ -136,4 +136,14 @@ class OrderController extends Controller
 
         return back()->with('success', '🗑️ Producto eliminado del carrito');
     }
+    public function confirm(Request $request)
+{
+    // Aquí puedes guardar los datos del pedido en sesión temporal
+    $request->session()->put('pending_order', $request->all());
+
+    // Redirige a la vista de confirmación/cancelación
+    return view('orders.confirm');
+    
+}
+
 }

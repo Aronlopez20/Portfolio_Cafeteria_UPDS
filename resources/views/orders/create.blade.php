@@ -11,7 +11,7 @@
                 <!-- Header -->
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold text-gray-900 mb-2">🛒 Confirmar Pedido</h1>
-                    <p class="text-gray-600">Revisa tu pedido antes de confirmar</p>
+                    <p class="text-gray-600">Revisa tu pedo antes de confirmar</p>
                 </div>
 
                 <!-- Order Items -->
@@ -58,53 +58,54 @@
                     </div>
                 </div>
 
-                <!-- Order Form -->
-                <form method="POST" action="{{ route('orders.store') }}" class="space-y-6">
-                    @csrf
-                    
-                    <!-- Special Notes -->
-                    <div>
-                        <label for="special_notes" class="block text-sm font-medium text-gray-700 mb-2">
-                            📝 Notas Especiales (Opcional)
-                        </label>
-                        <textarea id="special_notes" name="special_notes" rows="3" 
-                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                                  placeholder="Ej: Sin cebolla, extra queso, etc.">{{ old('special_notes') }}</textarea>
-                        @error('special_notes')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+              <!-- Order Form -->
+<form method="POST" action="{{ route('orders.confirm') }}" class="space-y-6">
+    @csrf
+    
+    <!-- Special Notes -->
+    <div>
+        <label for="special_notes" class="block text-sm font-medium text-gray-700 mb-2">
+            📝 Notas Especiales (Opcional)
+        </label>
+        <textarea id="special_notes" name="special_notes" rows="3" 
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="Ej: Sin cebolla, extra queso, etc.">{{ old('special_notes') }}</textarea>
+        @error('special_notes')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </div>
 
-                    <!-- Scheduled Time -->
-                    <div>
-                        <label for="scheduled_for" class="block text-sm font-medium text-gray-700 mb-2">
-                            ⏰ Programar para más tarde (Opcional)
-                        </label>
-                        <input type="datetime-local" id="scheduled_for" name="scheduled_for"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                               min="{{ now()->addMinutes(30)->format('Y-m-d\TH:i') }}"
-                               max="{{ now()->addHours(8)->format('Y-m-d\TH:i') }}"
-                               value="{{ old('scheduled_for') }}">
-                        <p class="mt-1 text-xs text-gray-500">
-                            💡 Si no seleccionas hora, prepararemos tu pedido inmediatamente
-                        </p>
-                        @error('scheduled_for')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+    <!-- Scheduled Time -->
+    <div>
+        <label for="scheduled_for" class="block text-sm font-medium text-gray-700 mb-2">
+            ⏰ Programar para más tarde (Opcional)
+        </label>
+        <input type="datetime-local" id="scheduled_for" name="scheduled_for"
+               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+               min="{{ now()->addMinutes(30)->format('Y-m-d\TH:i') }}"
+               max="{{ now()->addHours(8)->format('Y-m-d\TH:i') }}"
+               value="{{ old('scheduled_for') }}">
+        <p class="mt-1 text-xs text-gray-500">
+            💡 Si no seleccionas hora, prepararemos tu pedido inmediatamente
+        </p>
+        @error('scheduled_for')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </div>
 
-                    <!-- Action Buttons -->
-                    <div class="flex space-x-4">
-                        <a href="{{ route('menu.index') }}" 
-                           class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded text-center transition duration-150">
-                            ⬅️ Seguir Comprando
-                        </a>
-                        <button type="submit" 
-                                class="flex-1 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded transition duration-150">
-                            🚀 Confirmar Pedido
-                        </button>
-                    </div>
-                </form>
+    <!-- Action Buttons -->
+    <div class="flex space-x-4">
+        <a href="{{ route('menu.index') }}" 
+           class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded text-center transition duration-150">
+            ⬅️ Seguir Comprando
+        </a>
+        <button type="submit" 
+                class="flex-1 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded transition duration-150">
+            🚀 Pagar Pedido
+        </button>
+    </div>
+</form>
+
             </div>
         </div>
     </div>

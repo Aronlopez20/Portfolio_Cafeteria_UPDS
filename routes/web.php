@@ -47,6 +47,9 @@ Route::middleware(['auth', 'verified', 'role:student,admin'])->group(function ()
     // Carrito
     Route::post('/carrito/agregar/{menuItem}', [OrderController::class, 'addToCart'])->name('cart.add');
     Route::delete('/carrito/eliminar/{menuItem}', [OrderController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/orders/confirm', [App\Http\Controllers\OrderController::class, 'confirm'])
+    ->name('orders.confirm');
+
     
     // Pedidos
     Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');
