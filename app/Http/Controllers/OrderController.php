@@ -31,7 +31,7 @@ class OrderController extends Controller
 
         $total = 0;
         $items = [];
-        
+
         foreach ($cartItems as $itemId => $quantity) {
             $menuItem = MenuItem::find($itemId);
             if ($menuItem && $menuItem->is_available) {
@@ -47,6 +47,49 @@ class OrderController extends Controller
         return view('orders.create', compact('items', 'total'));
     }
 
+
+
+
+    //
+    public function invoiceApi($id)
+{
+    $order = Order::with('orderItems.menuItem', 'user')->findOrFail($id);
+
+    return response()->json([
+        'order_number' => $order->order_number,
+        'scheduled_for' => $order->scheduled_for,
+        'payment_status' => $order->payment_status,
+        'user' => [
+            'name' => $order->user->name,
+        ],
+        'items' => $order->orderItems->map(function($item) {
+            return [
+                'name' => $item->menuItem->name,
+                'quantity' => $item->quantity,
+                'unit_price' => $item->unit_price,
+                'total_price' => $item->total_price,
+            ];
+        }),
+        'total_amount' => $order->total_amount,
+    ]);
+}
+    //
+
+
+    //
+    public function invoice($id)
+{
+    $order = Order::with('orderItems.menuItem', 'user')->findOrFail($id);
+
+    // Esto lo comentamos para que siempre muestre la factura
+    // if ($order->payment_status !== 'paid') {
+    //     return redirect()->back()->with('error', 'Factura solo disponible para pedidos pagados.');
+    // }
+
+    return view('orders.invoice', compact('order'));
+}
+    //
+
     public function store(Request $request)
     {
         $request->validate([
@@ -55,7 +98,7 @@ class OrderController extends Controller
         ]);
 
         $cartItems = session('cart', []);
-        
+
         if (empty($cartItems)) {
             return redirect()->route('menu.index')->with('error', '🛒 Tu carrito está vacío');
         }
@@ -71,12 +114,12 @@ class OrderController extends Controller
             ]);
 
             $total = 0;
-            
+
             foreach ($cartItems as $itemId => $quantity) {
                 $menuItem = MenuItem::find($itemId);
                 if ($menuItem && $menuItem->is_available && $menuItem->available_quantity >= $quantity) {
                     $subtotal = $menuItem->price * $quantity;
-                    
+
                     OrderItem::create([
                         'order_id' => $order->id,
                         'menu_item_id' => $menuItem->id,
@@ -143,7 +186,7 @@ class OrderController extends Controller
 
     // Redirige a la vista de confirmación/cancelación
     return view('orders.confirm');
-    
+
 }
 
 }

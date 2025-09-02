@@ -36,6 +36,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    // -----------------------------
+// RELACIÓN orderItems
+// Esto permite al modelo Order acceder a sus items con $order->orderItems
+// Necesario para la API de factura y la vista HTML
+// -----------------------------
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

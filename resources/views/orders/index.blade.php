@@ -18,7 +18,7 @@
                 <div class="text-6xl mb-4">🍽️</div>
                 <h2 class="text-2xl font-semibold text-gray-700 mb-2">¡Aún no tienes pedidos!</h2>
                 <p class="text-gray-500 mb-6">¿Qué tal si empiezas ordenando algo delicioso?</p>
-                <a href="{{ route('menu.index') }}" 
+                <a href="{{ route('menu.index') }}"
                    class="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150">
                     🍽️ Ver Menú
                 </a>
@@ -119,11 +119,11 @@
 
                             <!-- Order Actions -->
                             <div class="mt-6 flex justify-end space-x-3">
-                                <a href="{{ route('orders.show', $order) }}" 
+                                <a href="{{ route('orders.show', $order) }}"
                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-medium transition duration-150">
                                     👁️ Ver Detalles
                                 </a>
-                                
+                                <a href="{{ route('orders.invoice', $order->id) }}">🧾 Ver Factura</a>
                                 @if($order->status === 'pending' && !$order->scheduled_for)
                                     <button class="bg-red-100 hover:bg-red-200 text-red-800 px-4 py-2 rounded-md text-sm font-medium transition duration-150">
                                         ❌ Cancelar

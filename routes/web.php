@@ -16,6 +16,22 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+//
+Route::get('/api/orders/{id}/invoice', [OrderController::class, 'invoiceApi']);
+//
+
+
+//
+Route::get('/orders/{id}/invoice', [OrderController::class, 'invoice'])->name('orders.invoice');
+//
+
+//
+use App\Http\Controllers\Api\PaymentController;
+
+Route::get('payments/paid', [PaymentController::class, 'getPaidOrders']);
+Route::get('payments/{id}', [PaymentController::class, 'getPaidOrderDetails']);
+//
+
 // Página principal - redirigir según rol
 Route::get('/', function () {
     if (auth()->check()) {
@@ -50,7 +66,7 @@ Route::middleware(['auth', 'verified', 'role:student,admin'])->group(function ()
     Route::post('/orders/confirm', [App\Http\Controllers\OrderController::class, 'confirm'])
     ->name('orders.confirm');
 
-    
+
     // Pedidos
     Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/pedidos/crear', [OrderController::class, 'create'])->name('orders.create');
@@ -61,17 +77,17 @@ Route::middleware(['auth', 'verified', 'role:student,admin'])->group(function ()
 // Rutas de administración
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    
+
     // Gestión de usuarios
     Route::get('/usuarios', [UserController::class, 'index'])->name('users.index');
     Route::get('/usuarios/{user}', [UserController::class, 'show'])->name('users.show');
     Route::post('/usuarios/{user}/asignar-rol', [UserController::class, 'assignRole'])->name('users.assign-role');
     Route::delete('/usuarios/{user}/remover-rol', [UserController::class, 'removeRole'])->name('users.remove-role');
-    
+
     // Gestión de menú y categorías
     Route::resource('categorias', CategoryController::class);
     Route::resource('menu-items', MenuController::class);
-    
+
     // Todos los pedidos
     Route::get('/pedidos', [OrderController::class, 'allOrders'])->name('orders.index');
 });
